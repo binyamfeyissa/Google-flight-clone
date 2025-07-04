@@ -12,7 +12,7 @@ interface UIState extends UIPreferences {
 const savedPreferences = loadUserPreferences()
 
 const initialState: UIState = {
-  theme: savedPreferences.theme || "light",
+  theme: "light",
   currency: savedPreferences.currency || "USD",
   language: "en",
   visibleColumns: savedPreferences.visibleColumns || ["airline", "departure", "arrival", "duration", "stops", "price"],
