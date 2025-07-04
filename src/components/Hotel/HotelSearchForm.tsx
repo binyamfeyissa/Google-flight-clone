@@ -17,7 +17,7 @@ import { Search as SearchIcon, Hotel as HotelIcon, CalendarToday as CalendarIcon
 import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
-import * as dayjs from "dayjs"
+import dayjs from "dayjs"
 export type { Dayjs } from "dayjs"
 import { useAppDispatch, useAppSelector } from "@/store"
 import { setSearchParams, searchHotelsAsync } from "@/store/slices/hotelSlice"

@@ -39,7 +39,7 @@ const inputSx = {
 
 const CarSearchForm: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { searchParams, isSearching } = useAppSelector((state) => state.cars)
+  const { isSearching } = useAppSelector((state) => state.cars)
 
   const [location, setLocation] = useState("")
   const [pickupDate, setPickupDate] = useState<dayjs.Dayjs | null>(dayjs().add(1, "day"))

@@ -272,13 +272,17 @@ const FlightResults: React.FC = () => {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={pageSize || 10} // Default to 10 if pageSize is undefined
-            rowsPerPageOptions={[10, 25, 50]}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: pageSize || 10, page: 0 },
+              },
+            }}
+            pageSizeOptions={[10, 25, 50]}
             sortModel={sortModel}
             onSortModelChange={handleSortModelChange}
             filterModel={{ items: filterModel.items || [] }} // Ensure filterModel has a valid structure
             onFilterModelChange={handleFilterModelChange}
-            disableSelectionOnClick
+            disableRowSelectionOnClick
             sx={{
               "& .MuiDataGrid-row:hover": {
                 backgroundColor: "action.hover",

@@ -2,10 +2,10 @@
 
 import type React from "react"
 import { useMemo } from "react"
-import { Card, CardContent, Typography, Box, Button, Skeleton } from "@mui/material"
+import { Card, CardContent, Typography, Box, Skeleton } from "@mui/material"
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine } from "recharts"
 import { CalendarMonth as CalendarIcon } from "@mui/icons-material"
-import * as dayjs from "dayjs"
+import dayjs from "dayjs"
 
 interface PriceCalendarProps {
   selectedDate?: string
