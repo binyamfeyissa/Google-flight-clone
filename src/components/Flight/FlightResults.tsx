@@ -26,9 +26,10 @@ import { useAppSelector, useAppDispatch } from "@/store"
 import { setSortModel, setFilterModel } from "@/store/slices/uiSlice"
 import { formatDuration, formatTime } from "@/utils/formatters"
 import ColumnCustomization from "./ColumnCustomization"
+import { FlightItinerary } from "@/types"
 
 interface FlightResultsProps {
-  flights: any[];
+  flights: FlightItinerary[];
 }
 
 const FlightResults: React.FC<FlightResultsProps> = ({ flights }) => {

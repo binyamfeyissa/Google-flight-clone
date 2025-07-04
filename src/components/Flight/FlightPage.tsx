@@ -20,6 +20,7 @@ import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from "react";
+import type { PopularDestination } from "@/types"
 
 const FlightPage: React.FC = () => {
   const theme = useTheme();
@@ -43,7 +44,7 @@ const FlightPage: React.FC = () => {
     dispatch(searchFlightsAsync(params))
   }
 
-  const handlePopularDestinationSelect = (destination: any) => {
+  const handlePopularDestinationSelect = (destination: { code: string; city: string }) => {
     const params = {
       originSkyId: "JFK", // Default origin
       destinationSkyId: destination.code,
@@ -175,7 +176,7 @@ const FlightPage: React.FC = () => {
           <li>Responsive, modern UI with Material-UI</li>
         </ul>
         <Typography sx={{ color: '#888', fontSize: 15, mt: 2 }}>
-          This section is for demonstration and recruiter review. Explore the app to see all features in action!
+          Explore the app to see all features in action! https://github.com/binyamfeyissa/Google-flight-clone
         </Typography>
       </Box>
       
@@ -312,7 +313,6 @@ const FlightPage: React.FC = () => {
   <Box sx={{ maxWidth: 900, mx: 'auto', textAlign: 'center' }}>
     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'center', gap: 2, mb: 2, alignItems: 'center' }}>
       <Button
-        variant="outlined"
         startIcon={<LanguageIcon />}
         sx={{ borderRadius: 8, textTransform: 'none', px: 2, fontWeight: 500, fontSize: 16, width: { xs: '100%', sm: 'auto' } }}
       >
