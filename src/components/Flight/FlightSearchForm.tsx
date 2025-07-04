@@ -13,6 +13,7 @@ import {
   IconButton,
   InputAdornment,
   Paper,
+  Typography,
 } from "@mui/material"
 import {
   Search as SearchIcon,
@@ -203,6 +204,12 @@ const FlightSearchForm: React.FC = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Paper elevation={2} sx={{ maxWidth: 1200, mx: "auto", my: 4, borderRadius: 4, overflow: "hidden", bgcolor: "background.paper" }}>
+        {/* Demo Data Example */}
+        <Box sx={{ px: 3, pt: 2, pb: 0 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            <strong>Example:</strong> From <b>JFK</b> to <b>LHR</b>, Departure: <b>{dayjs().add(1, "day").format("YYYY-MM-DD")}</b>
+          </Typography>
+        </Box>
         {/* Top Controls Row */}
         <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, alignItems: { xs: "stretch", sm: "center" }, gap: { xs: 1, sm: 2 }, p: 3, pb: 2 }}>
           {/* Trip Type */}
