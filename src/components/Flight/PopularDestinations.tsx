@@ -15,22 +15,7 @@ interface PopularDestination {
 }
 
 const popularDestinations: PopularDestination[] = [
-  {
-    code: "PAR",
-    city: "Paris",
-    country: "France",
-    price: 549,
-    image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52?auto=format&fit=crop&w=400&q=80",
-    trend: "stable",
-  },
-  {
-    code: "MIL",
-    city: "Milan",
-    country: "Italy",
-    price: 579,
-    image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=400&q=80",
-    trend: "up",
-  },
+  
   {
     code: "SIN",
     city: "Singapore",
