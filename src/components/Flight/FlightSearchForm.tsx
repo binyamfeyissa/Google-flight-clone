@@ -207,7 +207,7 @@ const FlightSearchForm: React.FC = () => {
         {/* Demo Data Example */}
         <Box sx={{ px: 3, pt: 2, pb: 0 }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            <strong>Example:</strong> From <b>JFK</b> to <b>LHR</b>, Departure: <b>{dayjs().add(1, "day").format("YYYY-MM-DD")}</b>
+            <strong>Example:</strong> From <b>JFK</b> to <b>LAX</b>, Departure: <b>{dayjs().add(1, "day").format("YYYY-MM-DD")}</b>
           </Typography>
         </Box>
         {/* Top Controls Row */}
