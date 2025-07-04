@@ -26,6 +26,12 @@ interface FlightState {
     stops: string[]
     airlines: string[]
     departureTime: string[]
+    bags: string;
+    price: string;
+    times: string;
+    emissions: string;
+    connectingAirports: string;
+    duration: string;
   }
 }
 
@@ -58,6 +64,12 @@ const initialState: FlightState = {
     stops: [],
     airlines: [],
     departureTime: [],
+    bags: 'Any',
+    price: 'Any',
+    times: 'Any',
+    emissions: 'Any',
+    connectingAirports: 'Any',
+    duration: 'Any',
   },
 }
 

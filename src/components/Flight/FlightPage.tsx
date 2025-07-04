@@ -9,7 +9,6 @@ import VirtualizedFlightResults from "./VirtualizedFlightResults"
 import PriceCalendar from "./PriceCalendar"
 import FlightFilters from "./FlightFilters"
 import RecentSearches from "./RecentSearches"
-import PopularDestinations from "./PopularDestinations"
 import { useAppSelector, useAppDispatch } from "@/store"
 import { setSearchParams, searchFlightsAsync } from "@/store/slices/flightSlice"
 import { saveRecentSearch, type RecentSearch } from "@/utils/localStorage"
@@ -19,8 +18,6 @@ import LanguageIcon from '@mui/icons-material/Language';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from "react";
-import type { PopularDestination } from "@/types"
 
 const FlightPage: React.FC = () => {
   const theme = useTheme();
@@ -188,7 +185,6 @@ const FlightPage: React.FC = () => {
       {!hasResults && (
         <>
           <RecentSearches onSearchSelect={handleRecentSearchSelect} />
-          <PopularDestinations onDestinationSelect={handlePopularDestinationSelect} />
         </>
       )}
 
@@ -313,6 +309,7 @@ const FlightPage: React.FC = () => {
   <Box sx={{ maxWidth: 900, mx: 'auto', textAlign: 'center' }}>
     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'center', gap: 2, mb: 2, alignItems: 'center' }}>
       <Button
+        variant="outlined"
         startIcon={<LanguageIcon />}
         sx={{ borderRadius: 8, textTransform: 'none', px: 2, fontWeight: 500, fontSize: 16, width: { xs: '100%', sm: 'auto' } }}
       >

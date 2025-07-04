@@ -9,8 +9,13 @@ interface PriceCalendarProps {
   priceData: { date: string; price: number }[];
 }
 
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: { payload: { date: string; price: number } }[];
+}
+
 const PriceCalendar: React.FC<PriceCalendarProps> = ({ priceData }) => {
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (

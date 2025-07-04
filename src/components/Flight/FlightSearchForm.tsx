@@ -216,7 +216,7 @@ const FlightSearchForm: React.FC = () => {
           <FormControl sx={{ minWidth: { xs: "100%", sm: 140 } }}>
             <Select
               value={tripType}
-              onChange={(e) => setTripType(e.target.value as any)}
+              onChange={(e) => setTripType(e.target.value as "round-trip" | "one-way")}
               variant="outlined"
               size="small"
               startAdornment={<SwapIcon sx={{ mr: 1, color: "text.secondary" }} />}
@@ -245,7 +245,7 @@ const FlightSearchForm: React.FC = () => {
           <FormControl sx={{ minWidth: { xs: "100%", sm: 120 } }}>
             <Select
               value={searchParams.cabinClass}
-              onChange={(e) => dispatch(setSearchParams({ cabinClass: e.target.value as any }))}
+              onChange={(e) => dispatch(setSearchParams({ cabinClass: e.target.value as "economy" | "premium_economy" | "business" | "first" }))}
               variant="outlined"
               size="small"
               sx={{ borderRadius: 3, border: "none", bgcolor: "background.paper", color: "text.primary", fontWeight: 500, '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' }, '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' } }}
