@@ -2,8 +2,6 @@
 
 Enterprise-grade flight search application showcasing modern React development practices, advanced performance optimizations, and scalable architecture patterns.
 
-## 🎯 **For Senior Frontend Developers**
-
 This project demonstrates mastery of:
 
 - **Advanced React Patterns** (Custom hooks, compound components, render props)
