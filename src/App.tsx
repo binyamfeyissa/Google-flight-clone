@@ -13,6 +13,7 @@ import { useAppSelector } from "@/store"
 import { useServiceWorker } from "@/hooks/useServiceWorker"
 import { ThemeModeProvider } from "@/theme/ThemeModeProvider"
 import { CssBaseline, useMediaQuery } from "@mui/material"
+import VercelAnalytics from "@/components/VercelAnalytics"
 
 const AppContent: React.FC = () => {
   const { activeTab } = useAppSelector((state) => state.ui)
@@ -37,6 +38,7 @@ const AppContent: React.FC = () => {
   return (
     <>
       <Layout>{renderContent()}</Layout>
+      <VercelAnalytics />
       {isUpdateAvailable && (
         <div
           style={{

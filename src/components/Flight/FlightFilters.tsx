@@ -28,7 +28,12 @@ const filterOptions = [
   { label: "Duration", options: ["Any", "< 4h", "4-8h", "> 8h"] },
 ]
 
-const FlightFilters: React.FC = () => {
+interface FlightFiltersProps {
+  stopsFilter: string;
+  setStopsFilter: (value: string) => void;
+}
+
+const FlightFilters: React.FC<FlightFiltersProps> = ({ stopsFilter, setStopsFilter }) => {
   const [anchorEls, setAnchorEls] = useState<(null | HTMLElement)[]>(Array(filterOptions.length).fill(null))
   const [allFiltersAnchor, setAllFiltersAnchor] = useState<null | HTMLElement>(null)
 
@@ -90,7 +95,7 @@ const FlightFilters: React.FC = () => {
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Stops
           </Typography>
-          <RadioGroup defaultValue="Any number of stops">
+          <RadioGroup value={stopsFilter} onChange={e => setStopsFilter(e.target.value)}>
             <FormControlLabel value="Any number of stops" control={<Radio />} label="Any number of stops" />
             <FormControlLabel value="Nonstop only" control={<Radio />} label="Nonstop only" />
             <FormControlLabel value="1 stop or fewer" control={<Radio />} label="1 stop or fewer" />

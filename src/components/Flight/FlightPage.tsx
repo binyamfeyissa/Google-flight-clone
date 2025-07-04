@@ -19,6 +19,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useState } from "react";
 
 const FlightPage: React.FC = () => {
   const theme = useTheme();
@@ -26,6 +27,7 @@ const FlightPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { flights } = useAppSelector((state) => state.flights);
   const hasResults = flights.length > 0;
+  const [stopsFilter, setStopsFilter] = useState<string>("Any number of stops");
 
   const handleRecentSearchSelect = (search: RecentSearch) => {
     const params = {
@@ -62,6 +64,16 @@ const FlightPage: React.FC = () => {
       tripType: 'one-way',
     });
   };
+
+  // Filter flights based on stops
+  const filteredFlights = flights.filter(flight => {
+    if (stopsFilter === "Any number of stops") return true;
+    const stopCount = flight.legs[0]?.stopCount ?? 0;
+    if (stopsFilter === "Nonstop only") return stopCount === 0;
+    if (stopsFilter === "1 stop or fewer") return stopCount <= 1;
+    if (stopsFilter === "2 stops or fewer") return stopCount <= 2;
+    return true;
+  });
 
   // Use virtualized results for large datasets
   const useVirtualization = flights.length > 50
@@ -130,12 +142,12 @@ const FlightPage: React.FC = () => {
       )}
       {hasResults && !isMobile && (
         <Box sx={{ mb: 2 }}>
-          <FlightFilters />
+          <FlightFilters stopsFilter={stopsFilter} setStopsFilter={setStopsFilter} />
         </Box>
       )}
       <Grid container spacing={isMobile ? 1 : 3}>
         <Grid item xs={12}>
-          {useVirtualization ? <VirtualizedFlightResults itineraries={flights} /> : <FlightResults />}
+          {useVirtualization ? <VirtualizedFlightResults itineraries={filteredFlights} /> : <FlightResults />}
         </Grid>
       </Grid>
 
