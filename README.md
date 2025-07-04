@@ -40,7 +40,7 @@ export const searchFlightsAsync = createAsyncThunk(
 
 ### **Component Architecture**
 
-\`\`\`
+```
 src/components/
 ├── Layout/ # Shell components (AppBar, Navigation)
 ├── Flight/ # Feature-specific components
@@ -50,13 +50,15 @@ src/components/
 │ └── RouteMap.tsx # SVG-based route visualization
 ├── Hotel/ # Hotel search components
 └── Car/ # Car rental components
-\`\`\`
+```
 
+```
 ### **Performance Optimizations**
 
 #### **1. Virtual Scrolling**
 
-\`\`\`
+```
+
 // Handle 10,000+ flight results without performance degradation
 import { FixedSizeList as List } from 'react-window'
 
@@ -73,11 +75,13 @@ return (
 </List>
 )
 }
-\`\`\`
+
+```
 
 #### **2. Intelligent Memoization**
 
-\`\`\`
+```
+
 // Prevent unnecessary re-renders with strategic memoization
 const FlightRow = React.memo(({ flight, onSelect }) => {
 const handleSelect = useCallback(() => {
@@ -92,11 +96,13 @@ const selectFilteredFlights = createSelector(
 [selectFlights, selectFilters],
 (flights, filters) => applyFilters(flights, filters)
 )
-\`\`\`
+
+```
 
 #### **3. Progressive Web App Features**
 
-\`\`\`
+```
+
 // Service Worker with intelligent caching
 const CACHE_STRATEGIES = {
 API_RESPONSES: 'network-first', // Fresh data preferred
@@ -110,7 +116,8 @@ if (event.tag === 'flight-search') {
 event.waitUntil(syncPendingSearches())
 }
 })
-\`\`\`
+
+```
 
 ---
 
@@ -118,7 +125,8 @@ event.waitUntil(syncPendingSearches())
 
 ### **Breakpoint Strategy**
 
-\`\`\`
+```
+
 const theme = createTheme({
 breakpoints: {
 values: {
@@ -141,11 +149,13 @@ return isMobile ? (
 <DesktopDataGrid flights={flights} />
 )
 }
-\`\`\`
+
+```
 
 ### **Touch-First Interactions**
 
-\`\`\`
+```
+
 // SwipeableDrawer for mobile navigation
 <SwipeableDrawer
 anchor="left"
@@ -171,7 +181,8 @@ sx={{ position: 'fixed', bottom: 0 }}
 
 ))}
 </BottomNavigation>
-\`\`\`
+
+```
 
 ---
 
@@ -179,7 +190,8 @@ sx={{ position: 'fixed', bottom: 0 }}
 
 ### **1. User Preferences Persistence**
 
-\`\`\`
+```
+
 // Sophisticated localStorage abstraction
 export class PreferencesManager {
 private static instance: PreferencesManager
@@ -211,11 +223,13 @@ saveUserPreferences({ visibleColumns: action.payload })
 }
 }
 })
-\`\`\`
+
+```
 
 ### **2. Intelligent Search Enhancements**
 
-\`\`\`
+```
+
 // Debounced autocomplete with caching
 const useAirportSearch = (query: string) => {
 const [results, setResults] = useState<Airport[]>([])
@@ -244,11 +258,13 @@ debouncedSearch(query)
 
 return results
 }
-\`\`\`
+
+```
 
 ### **3. Advanced Data Visualization**
 
-\`\`\`
+```
+
 // SVG-based route mapping with animations
 const RouteMap = ({ origin, destination }) => {
 const pathData = useMemo(() => {
@@ -284,7 +300,8 @@ return (
 
 )
 }
-\`\`\`
+
+```
 
 ---
 
@@ -292,7 +309,8 @@ return (
 
 ### **Component Testing**
 
-\`\`\`
+```
+
 // Comprehensive component testing with MSW
 describe('FlightSearchForm', () => {
 beforeEach(() => {
@@ -319,11 +337,13 @@ render(<FlightSearchForm />)
 
 })
 })
-\`\`\`
+
+```
 
 ### **Redux Testing**
 
-\`\`\`
+```
+
 // State management testing with realistic scenarios
 describe('flightSlice', () => {
 test('handles concurrent search requests correctly', async () => {
@@ -345,11 +365,13 @@ const store = createTestStore()
 
 })
 })
-\`\`\`
+
+```
 
 ### **Performance Testing**
 
-\`\`\`
+```
+
 // Performance benchmarks for critical paths
 describe('Performance', () => {
 test('renders 1000 flight results under 100ms', () => {
@@ -377,7 +399,8 @@ const apiSpy = jest.spyOn(api, 'searchAirports')
 
 })
 })
-\`\`\`
+
+````
 
 ---
 
@@ -385,7 +408,7 @@ const apiSpy = jest.spyOn(api, 'searchAirports')
 
 ### **Bundle Analysis**
 
-\`\`\`bash
+```bash
 
 # Bundle size optimization
 
@@ -397,11 +420,11 @@ Initial Bundle: 245KB (gzipped)
 Largest Chunk: 89KB (Material-UI)
 Code Splitting: 12 dynamic chunks
 Tree Shaking: 67% reduction in unused code
-\`\`\`
+````
 
 ### **Runtime Performance**
 
-\`\`\`
+```
 // Performance monitoring in production
 const performanceObserver = new PerformanceObserver((list) => {
 for (const entry of list.getEntries()) {
@@ -422,7 +445,7 @@ performance.mark('search-start')
 await searchFlights(params)
 performance.mark('search-end')
 performance.measure('flight-search', 'search-start', 'search-end')
-\`\`\`
+```
 
 ---
 
@@ -430,7 +453,7 @@ performance.measure('flight-search', 'search-start', 'search-end')
 
 ### **Build Optimization**
 
-\`\`\`
+```
 // Vite configuration for production
 export default defineConfig({
 build: {
@@ -454,11 +477,11 @@ drop_debugger: true
 }
 }
 })
-\`\`\`
+```
 
 ### **CI/CD Pipeline**
 
-\`\`\`yaml
+```yaml
 
 # .github/workflows/deploy.yml
 
@@ -491,7 +514,7 @@ steps: - name: Deploy to Vercel
 uses: vercel/action@v1
 with:
 vercel-token: \${{ secrets.VERCEL_TOKEN }}
-\`\`\`
+```
 
 ---
 
@@ -523,7 +546,7 @@ vercel-token: \${{ secrets.VERCEL_TOKEN }}
 
 ### **Code Organization**
 
-\`\`\`
+```
 // Feature-based folder structure scales to large teams
 src/
 ├── features/
@@ -544,11 +567,11 @@ src/
 ├── store/
 ├── router/
 └── providers/
-\`\`\`
+```
 
 ### **API Integration Strategy**
 
-\`\`\`
+```
 // Abstracted API layer for easy provider switching
 interface FlightSearchProvider {
 searchFlights(params: SearchParams): Promise<Flight[]>
@@ -571,7 +594,7 @@ return this.apiClient.post('/shopping/flight-offers-search', params)
 const flightProvider = process.env.FLIGHT_PROVIDER === 'amadeus'
 ? new AmadeusProvider()
 : new SkyScannerProvider()
-\`\`\`
+```
 
 ---
 
