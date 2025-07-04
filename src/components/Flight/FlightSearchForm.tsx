@@ -51,7 +51,6 @@ const inputSx = {
 
 // --- Reusable Components ---
 const AirportAutocomplete = ({
-  label,
   placeholder,
   value,
   inputValue,
@@ -60,7 +59,6 @@ const AirportAutocomplete = ({
   options,
   loading,
 }: {
-  label: string
   placeholder: string
   value: Airport | null
   inputValue: string
@@ -260,7 +258,6 @@ const FlightSearchForm: React.FC = () => {
             {/* Origin */}
             <Box sx={{ flex: 1, width: { xs: "100%", sm: "auto" } }}>
               <AirportAutocomplete
-                label="From"
                 placeholder="From?"
                 value={selectedOrigin}
                 inputValue={originInput}
@@ -283,7 +280,6 @@ const FlightSearchForm: React.FC = () => {
             {/* Destination */}
             <Box sx={{ flex: 1, width: { xs: "100%", sm: "auto" }, order: { xs: 2, sm: 3 } }}>
               <AirportAutocomplete
-                label="To"
                 placeholder="Where to?"
                 value={selectedDestination}
                 inputValue={destinationInput}

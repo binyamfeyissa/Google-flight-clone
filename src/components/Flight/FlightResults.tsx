@@ -23,7 +23,6 @@ import {
   Info as InfoIcon,
 } from "@mui/icons-material"
 import { useAppSelector, useAppDispatch } from "@/store"
-import { setSortBy } from "@/store/slices/flightSlice"
 import { setSortModel, setFilterModel } from "@/store/slices/uiSlice"
 import { formatDuration, formatTime } from "@/utils/formatters"
 import ColumnCustomization from "./ColumnCustomization"
@@ -31,7 +30,6 @@ import ColumnCustomization from "./ColumnCustomization"
 const FlightResults: React.FC = () => {
   const dispatch = useAppDispatch()
   const { flights, isSearchingFlights, flightError } = useAppSelector((state) => state.flights)
-  const { sortModel, filterModel, pageSize } = useAppSelector((state) => state.ui)
 
   // Transform flights data for DataGrid
   const rows = useMemo(() => {
@@ -178,14 +176,10 @@ const FlightResults: React.FC = () => {
   ]
 
   const handleSortModelChange = (model: GridSortModel) => {
-    const mappedModel = model.map((item) => ({
-      field: item.field,
-      sort: item.sort || "asc",
-    }))
-    dispatch(setSortModel(mappedModel))
-    if (mappedModel.length > 0) {
-      dispatch(setSortBy(mappedModel[0].field))
-    }
+    const filtered = model
+      .filter(item => item.sort === "asc" || item.sort === "desc")
+      .map(item => ({ field: item.field, sort: item.sort as "asc" | "desc" }));
+    dispatch(setSortModel(filtered));
   }
 
   const handleFilterModelChange = (model: GridFilterModel) => {
@@ -272,17 +266,18 @@ const FlightResults: React.FC = () => {
           <DataGrid
             rows={rows}
             columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { pageSize: pageSize || 10, page: 0 },
-              },
-            }}
-            pageSizeOptions={[10, 25, 50]}
-            sortModel={sortModel}
-            onSortModelChange={handleSortModelChange}
-            filterModel={{ items: filterModel.items || [] }} // Ensure filterModel has a valid structure
+            sortingMode="server"
+            filterMode="server"
             onFilterModelChange={handleFilterModelChange}
-            disableRowSelectionOnClick
+            onSortModelChange={handleSortModelChange}
+            pagination
+            paginationMode="server"
+            rowCount={flights.length}
+            paginationModel={{
+              page: 0,
+              pageSize: 10,
+            }}
+            autoHeight
             sx={{
               "& .MuiDataGrid-row:hover": {
                 backgroundColor: "action.hover",

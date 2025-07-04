@@ -14,18 +14,18 @@ import { useAppSelector, useAppDispatch } from "@/store"
 import { setSearchParams, searchFlightsAsync } from "@/store/slices/flightSlice"
 import { saveRecentSearch, type RecentSearch } from "@/utils/localStorage"
 import * as dayjs from "dayjs"
-import FlightHero from "./FlightHero"
+import FlightHero from "./FlightHero";
 import LanguageIcon from '@mui/icons-material/Language';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const FlightPage: React.FC = () => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"))
-  const dispatch = useAppDispatch()
-  const { flights, searchParams } = useAppSelector((state) => state.flights)
-  const hasResults = flights.length > 0
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const dispatch = useAppDispatch();
+  const { flights } = useAppSelector((state) => state.flights);
+  const hasResults = flights.length > 0;
 
   const handleRecentSearchSelect = (search: RecentSearch) => {
     const params = {
@@ -56,12 +56,12 @@ const FlightPage: React.FC = () => {
 
     // Save to recent searches
     saveRecentSearch({
-      origin: "JFK New York",
+      ...params,
+      origin: 'JFK New York',
       destination: `${destination.code} ${destination.city}`,
-      date: params.date,
-      tripType: "one-way",
-    })
-  }
+      tripType: 'one-way',
+    });
+  };
 
   // Use virtualized results for large datasets
   const useVirtualization = flights.length > 50
@@ -125,17 +125,17 @@ const FlightPage: React.FC = () => {
 
       {hasResults && (
         <>
-          <PriceCalendar />
+          <PriceCalendar priceData={flights.map(f => ({ date: f.legs[0].departure, price: f.price.raw }))} />
         </>
       )}
-{hasResults && !isMobile && (
+      {hasResults && !isMobile && (
         <Box sx={{ mb: 2 }}>
           <FlightFilters />
         </Box>
       )}
       <Grid container spacing={isMobile ? 1 : 3}>
         <Grid item xs={12}>
-          {useVirtualization ? <VirtualizedFlightResults /> : <FlightResults />}
+          {useVirtualization ? <VirtualizedFlightResults itineraries={flights} /> : <FlightResults />}
         </Grid>
       </Grid>
 
@@ -169,7 +169,7 @@ const FlightPage: React.FC = () => {
                   q: 'How can I get flight alerts for my trip?',
                   a: 'Sign up for price alerts to get notified when fares drop for your selected route.'
                 }
-              ].map((item, i) => (
+              ].map((item) => (
                 <Accordion key={item.q} sx={{ boxShadow: 'none', '&:before': { display: 'none' } }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography sx={{ fontSize: 18, fontWeight: 500 }}>{item.q}</Typography>
