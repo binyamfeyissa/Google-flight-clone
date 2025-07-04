@@ -1,3 +1,28 @@
+# About This App
+
+Google Flights Clone – A modern, full-featured flight search web application built with React, TypeScript, and Material-UI. This project demonstrates advanced frontend engineering, performance optimization, and robust state management.
+
+**Tech Stack:**
+
+- React, TypeScript, Material-UI (MUI)
+- Redux Toolkit for state management
+- Jest & React Testing Library for testing
+- Vite for fast builds and hot reloads
+- Service Worker for PWA/offline support
+- Local Storage, Day.js, Virtualized Lists
+
+**Key Features:**
+
+- Flight search with flexible dates and trip types
+- Advanced pagination, filtering, and virtualized results for performance
+- Autocomplete for city/airport fields
+- Popular routes & destinations, price calendar, and FAQ
+- Recent searches saved in local storage
+- Comprehensive unit/integration tests with Jest
+- Responsive, modern UI with Material-UI
+
+---
+
 # Google Flights Clone - Advanced Google Flights Clone
 
 Enterprise-grade flight search application showcasing modern React development practices, advanced performance optimizations, and scalable architecture patterns.
@@ -121,71 +146,6 @@ event.waitUntil(syncPendingSearches())
 
 ---
 
-## 🎨 **Mobile-First Responsive Design**
-
-### **Breakpoint Strategy**
-
-```
-
-const theme = createTheme({
-breakpoints: {
-values: {
-xs: 0, // Mobile portrait
-sm: 600, // Mobile landscape  
- md: 900, // Tablet
-lg: 1200, // Desktop
-xl: 1536, // Large desktop
-}
-}
-})
-
-// Responsive component logic
-const FlightResults = () => {
-const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-
-return isMobile ? (
-<MobileFlightCards flights={flights} />
-) : (
-<DesktopDataGrid flights={flights} />
-)
-}
-
-```
-
-### **Touch-First Interactions**
-
-```
-
-// SwipeableDrawer for mobile navigation
-<SwipeableDrawer
-anchor="left"
-open={sidebarOpen}
-onClose={closeSidebar}
-onOpen={openSidebar}
-disableSwipeToOpen={false}
-hysteresis={0.52}
-minFlingVelocity={450}
-
->   <NavigationContent />
-> </SwipeableDrawer>
-
-// Bottom navigation for thumb-friendly access
-<BottomNavigation
-value={activeTab}
-onChange={handleTabChange}
-sx={{ position: 'fixed', bottom: 0 }}
-
-> {navigationItems.map(item => (
-
-    <BottomNavigationAction {...item} />
-
-))}
-</BottomNavigation>
-
-```
-
----
-
 ## 🔧 **Advanced Features Implementation**
 
 ### **1. User Preferences Persistence**
@@ -300,6 +260,71 @@ return (
 
 )
 }
+
+```
+
+---
+
+## 🎨 **Mobile-First Responsive Design**
+
+### **Breakpoint Strategy**
+
+```
+
+const theme = createTheme({
+breakpoints: {
+values: {
+xs: 0, // Mobile portrait
+sm: 600, // Mobile landscape  
+ md: 900, // Tablet
+lg: 1200, // Desktop
+xl: 1536, // Large desktop
+}
+}
+})
+
+// Responsive component logic
+const FlightResults = () => {
+const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+return isMobile ? (
+<MobileFlightCards flights={flights} />
+) : (
+<DesktopDataGrid flights={flights} />
+)
+}
+
+```
+
+### **Touch-First Interactions**
+
+```
+
+// SwipeableDrawer for mobile navigation
+<SwipeableDrawer
+anchor="left"
+open={sidebarOpen}
+onClose={closeSidebar}
+onOpen={openSidebar}
+disableSwipeToOpen={false}
+hysteresis={0.52}
+minFlingVelocity={450}
+
+>   <NavigationContent />
+> </SwipeableDrawer>
+
+// Bottom navigation for thumb-friendly access
+<BottomNavigation
+value={activeTab}
+onChange={handleTabChange}
+sx={{ position: 'fixed', bottom: 0 }}
+
+> {navigationItems.map(item => (
+
+    <BottomNavigationAction {...item} />
+
+))}
+</BottomNavigation>
 
 ```
 
