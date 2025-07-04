@@ -9,6 +9,7 @@ import VirtualizedFlightResults from "./VirtualizedFlightResults"
 import PriceCalendar from "./PriceCalendar"
 import FlightFilters from "./FlightFilters"
 import RecentSearches from "./RecentSearches"
+import PopularDestinations from "./PopularDestinations"
 import { useAppSelector, useAppDispatch } from "@/store"
 import { setSearchParams, searchFlightsAsync } from "@/store/slices/flightSlice"
 import { saveRecentSearch, type RecentSearch } from "@/utils/localStorage"
@@ -39,6 +40,25 @@ const FlightPage: React.FC = () => {
 
     dispatch(setSearchParams(params))
     dispatch(searchFlightsAsync(params))
+  }
+
+  const handlePopularDestinationSelect = (destination: { code: string; city: string }) => {
+    const params = {
+      originSkyId: "JFK", // Default origin
+      destinationSkyId: destination.code,
+      originEntityId: "mock-entity-id",
+      destinationEntityId: "mock-entity-id",
+      date: dayjs().add(7, "day").format("YYYY-MM-DD"),
+    }
+    dispatch(setSearchParams(params))
+    dispatch(searchFlightsAsync(params))
+    // Save to recent searches
+    saveRecentSearch({
+      ...params,
+      origin: 'JFK New York',
+      destination: `${destination.code} ${destination.city}`,
+      tripType: 'one-way',
+    });
   }
 
   // Handlers for filter changes
@@ -164,6 +184,7 @@ const FlightPage: React.FC = () => {
       {!hasResults && (
         <>
           <RecentSearches onSearchSelect={handleRecentSearchSelect} />
+          <PopularDestinations onDestinationSelect={handlePopularDestinationSelect} />
         </>
       )}
 
