@@ -1,4 +1,4 @@
-import { createTheme, Components } from "@mui/material/styles"
+import { createTheme } from "@mui/material/styles"
 
 // Custom color palette
 const palette = {
@@ -21,24 +21,6 @@ const palette = {
   text: {
     primary: "#1e293b",
     secondary: "#64748b",
-  },
-}
-
-const themeComponents: Components = {
-  MuiDataGrid: {
-    styleOverrides: {
-      root: {
-        border: "none",
-        borderRadius: 16,
-        "& .MuiDataGrid-cell": {
-          borderBottom: "1px solid #f1f5f9",
-        },
-        "& .MuiDataGrid-columnHeaders": {
-          backgroundColor: "#f8fafc",
-          borderBottom: "2px solid #e2e8f0",
-        },
-      },
-    },
   },
 }
 

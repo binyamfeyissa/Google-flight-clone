@@ -23,15 +23,14 @@ import {
   Info as InfoIcon,
 } from "@mui/icons-material"
 import { useAppSelector, useAppDispatch } from "@/store"
-import { setSelectedFlight, setSortBy } from "@/store/slices/flightSlice"
+import { setSortBy } from "@/store/slices/flightSlice"
 import { setSortModel, setFilterModel } from "@/store/slices/uiSlice"
-import type { FlightItinerary } from "@/types"
 import { formatDuration, formatTime } from "@/utils/formatters"
 import ColumnCustomization from "./ColumnCustomization"
 
 const FlightResults: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { flights, isSearchingFlights, flightError, selectedFlight } = useAppSelector((state) => state.flights)
+  const { flights, isSearchingFlights, flightError } = useAppSelector((state) => state.flights)
   const { sortModel, filterModel, pageSize } = useAppSelector((state) => state.ui)
 
   // Transform flights data for DataGrid
@@ -46,14 +45,12 @@ const FlightResults: React.FC = () => {
         arrival: leg.arrival,
         duration: leg.durationInMinutes,
         stops: leg.stopCount,
-        price: flight.price.raw,
         priceFormatted: flight.price.formatted,
         origin: leg.origin.displayCode,
         destination: leg.destination.displayCode,
         tags: flight.tags,
         score: flight.score,
         hasFlexibleOptions: flight.hasFlexibleOptions,
-        ...flight,
       }
     })
   }, [flights])
@@ -130,7 +127,8 @@ const FlightResults: React.FC = () => {
         return <Chip label={stopsText} size="small" color={color} variant="outlined" />
       },
       valueGetter: (params) => {
-        return params === 0 ? "Nonstop" : params === 1 ? "1 Stop" : "2+ Stops"
+        const stopCount = params.row.stops
+        return stopCount === 0 ? "Nonstop" : stopCount === 1 ? "1 Stop" : "2+ Stops"
       },
     },
     {
@@ -165,12 +163,11 @@ const FlightResults: React.FC = () => {
       width: 120,
       sortable: false,
       filterable: false,
-      renderCell: (params) => (
+      renderCell: () => (
         <Box>
           <Button
             size="small"
             variant="contained"
-            onClick={() => dispatch(setSelectedFlight(params.row as FlightItinerary))}
             sx={{ minWidth: 80 }}
           >
             Select
@@ -181,22 +178,35 @@ const FlightResults: React.FC = () => {
   ]
 
   const handleSortModelChange = (model: GridSortModel) => {
-    dispatch(setSortModel(model))
-    if (model.length > 0) {
-      dispatch(setSortBy(model[0].field))
+    const mappedModel = model.map((item) => ({
+      field: item.field,
+      sort: item.sort || "asc",
+    }))
+    dispatch(setSortModel(mappedModel))
+    if (mappedModel.length > 0) {
+      dispatch(setSortBy(mappedModel[0].field))
     }
   }
 
   const handleFilterModelChange = (model: GridFilterModel) => {
-    dispatch(setFilterModel(model))
+    const mappedModel = model.items.map((item) => ({
+      field: item.field,
+      operator: item.operator || "",
+      value: item.value || null,
+    }))
+    dispatch(setFilterModel({ items: mappedModel }))
   }
 
   if (flightError) {
     return (
-      <Alert severity="error" sx={{ mb: 3 }}>
-        <Typography variant="h6">Error loading flights</Typography>
-        <Typography>{flightError}</Typography>
-      </Alert>
+      <Card>
+        <CardContent>
+          <Alert severity="error" sx={{ mb: 3 }}>
+            <Typography variant="h6">Error loading flights</Typography>
+            <Typography>{flightError}</Typography>
+          </Alert>
+        </CardContent>
+      </Card>
     )
   }
 
@@ -262,11 +272,11 @@ const FlightResults: React.FC = () => {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={pageSize}
+            pageSize={pageSize || 10} // Default to 10 if pageSize is undefined
             rowsPerPageOptions={[10, 25, 50]}
             sortModel={sortModel}
             onSortModelChange={handleSortModelChange}
-            filterModel={filterModel}
+            filterModel={{ items: filterModel.items || [] }} // Ensure filterModel has a valid structure
             onFilterModelChange={handleFilterModelChange}
             disableSelectionOnClick
             sx={{

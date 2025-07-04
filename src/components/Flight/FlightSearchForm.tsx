@@ -24,7 +24,7 @@ import {
 import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
-import * as dayjs from "dayjs"
+import dayjs from "dayjs"
 import { useAppDispatch, useAppSelector } from "@/store"
 import { setSearchParams, searchFlightsAsync, searchAirportsAsync } from "@/store/slices/flightSlice"
 import type { Airport } from "@/types"
