@@ -18,27 +18,27 @@ This project demonstrates mastery of:
 
 ### **State Management Strategy**
 
-\`\`\`typescript
+```typescript
 // Normalized Redux state with RTK
 interface AppState {
-flights: FlightState // Search results, filters, preferences
-hotels: HotelState // Hotel-specific state slice  
- cars: CarState // Car rental state slice
-ui: UIState // Cross-cutting UI concerns
+  flights: FlightState; // Search results, filters, preferences
+  hotels: HotelState; // Hotel-specific state slice
+  cars: CarState; // Car rental state slice
+  ui: UIState; // Cross-cutting UI concerns
 }
 
 // Async thunks with error boundaries
 export const searchFlightsAsync = createAsyncThunk(
-'flights/search',
-async (params: FlightSearchParams, { rejectWithValue }) => {
-try {
-return await searchFlights(params)
-} catch (error) {
-return rejectWithValue(error.message)
-}
-}
-)
-\`\`\`
+  "flights/search",
+  async (params: FlightSearchParams, { rejectWithValue }) => {
+    try {
+      return await searchFlights(params);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+```
 
 ### **Component Architecture**
 
