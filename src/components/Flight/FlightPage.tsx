@@ -25,9 +25,8 @@ const FlightPage: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const dispatch = useAppDispatch();
-  const { flights } = useAppSelector((state) => state.flights);
+  const { flights, filters } = useAppSelector((state) => state.flights);
   const hasResults = flights.length > 0;
-  const [stopsFilter, setStopsFilter] = useState<string>("Any number of stops");
 
   const handleRecentSearchSelect = (search: RecentSearch) => {
     const params = {
@@ -65,13 +64,81 @@ const FlightPage: React.FC = () => {
     });
   };
 
-  // Filter flights based on stops
+  // Handlers for filter changes
+  const handleStopsFilterChange = (value: string) => {
+    dispatch({ type: 'flights/setFilters', payload: { stops: value === 'Any number of stops' ? [] : [value] } });
+  };
+  const handleAirlinesFilterChange = (value: string[]) => {
+    dispatch({ type: 'flights/setFilters', payload: { airlines: value } });
+  };
+  const handleBagsFilterChange = (value: string) => {
+    dispatch({ type: 'flights/setFilters', payload: { bags: value } });
+  };
+  const handlePriceFilterChange = (value: string) => {
+    dispatch({ type: 'flights/setFilters', payload: { price: value } });
+  };
+  const handleTimesFilterChange = (value: string) => {
+    dispatch({ type: 'flights/setFilters', payload: { times: value } });
+  };
+  const handleEmissionsFilterChange = (value: string) => {
+    dispatch({ type: 'flights/setFilters', payload: { emissions: value } });
+  };
+  const handleConnectingAirportsFilterChange = (value: string) => {
+    dispatch({ type: 'flights/setFilters', payload: { connectingAirports: value } });
+  };
+  const handleDurationFilterChange = (value: string) => {
+    dispatch({ type: 'flights/setFilters', payload: { duration: value } });
+  };
+
+  // Filtering logic using Redux filters
   const filteredFlights = flights.filter(flight => {
-    if (stopsFilter === "Any number of stops") return true;
-    const stopCount = flight.legs[0]?.stopCount ?? 0;
-    if (stopsFilter === "Nonstop only") return stopCount === 0;
-    if (stopsFilter === "1 stop or fewer") return stopCount <= 1;
-    if (stopsFilter === "2 stops or fewer") return stopCount <= 2;
+    // Stops filter
+    if (filters.stops.length > 0) {
+      const stopCount = flight.legs[0]?.stopCount ?? 0;
+      const stopsFilter = filters.stops[0];
+      if (stopsFilter === "Nonstop only" && stopCount !== 0) return false;
+      if (stopsFilter === "1 stop or fewer" && stopCount > 1) return false;
+      if (stopsFilter === "2 stops or fewer" && stopCount > 2) return false;
+    }
+    // Airlines filter
+    if (filters.airlines.length > 0) {
+      const airline = flight.legs[0]?.segments[0]?.marketingCarrier?.allianceId || "";
+      if (!filters.airlines.includes(airline)) return false;
+    }
+    // Bags filter
+    if (filters.bags && filters.bags !== 'Any') {
+      // Example: filter by number of bags (not implemented in mock data)
+      // Add your logic here
+    }
+    // Price filter
+    if (filters.price && filters.price !== 'Any') {
+      const price = flight.price.raw;
+      if (filters.price === '$0-$200' && !(price >= 0 && price <= 200)) return false;
+      if (filters.price === '$200-$500' && !(price > 200 && price <= 500)) return false;
+      if (filters.price === '$500+' && !(price > 500)) return false;
+    }
+    // Times filter
+    if (filters.times && filters.times !== 'Any') {
+      // Example: filter by departure time (not implemented in mock data)
+      // Add your logic here
+    }
+    // Emissions filter
+    if (filters.emissions && filters.emissions !== 'Any') {
+      // Example: filter by emissions (not implemented in mock data)
+      // Add your logic here
+    }
+    // Connecting airports filter
+    if (filters.connectingAirports && filters.connectingAirports !== 'Any') {
+      // Example: filter by connecting airports (not implemented in mock data)
+      // Add your logic here
+    }
+    // Duration filter
+    if (filters.duration && filters.duration !== 'Any') {
+      const duration = flight.legs[0]?.durationInMinutes || 0;
+      if (filters.duration === '< 4h' && duration >= 240) return false;
+      if (filters.duration === '4-8h' && (duration < 240 || duration > 480)) return false;
+      if (filters.duration === '> 8h' && duration <= 480) return false;
+    }
     return true;
   });
 
@@ -80,49 +147,38 @@ const FlightPage: React.FC = () => {
 
   return (
     <Box sx={{ p: { xs: 1, md: 3 }, maxWidth: 1, width: '100%' }}>
-      <Box sx={{ mt: 6, mb: 4 }}>
-        <Box sx={{ maxWidth: 900, mx: 'auto' }}>
-          
-          <Box component="section">
-            <h2 style={{ fontWeight: 600, fontSize: 24, marginBottom: 16 }}>Find cheap flights on popular routes</h2>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={4}>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from New York to London</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from New York to Rome</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Toronto to London</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from London to Tokyo</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from New York to Los Angeles</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from London to Istanbul</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from London to Berlin</a></li>
-                </ul>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from New York to Paris</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Montreal to Paris</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from New York to Milan</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Madrid to Rome</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Paris to Marrakech</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Paris to Bangkok</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Chicago to Paris</a></li>
-                </ul>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from London to Paris</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from London to Milan</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from London to Dubai</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from London to Delhi</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Sao Paulo to London</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from New York to Orlando</a></li>
-                  <li><a href="#" style={{ color: '#1976d2' }}>Flights from Melbourne to London</a></li>
-                </ul>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
+      {/* Project Overview Section for Recruiters */}
+      <Box sx={{ maxWidth: 900, mx: 'auto', mt: 4, mb: 4, p: 3, borderRadius: 3, bgcolor: '#f5f7fa', boxShadow: 1 }}>
+        <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, color: '#1976d2' }}>
+          About This App
+        </Typography>
+        <Typography sx={{ fontSize: 17, mb: 2, color: '#333' }}>
+          <b>Google Flights Clone</b> – A modern, full-featured flight search web application built with React, TypeScript, and Material-UI. This project demonstrates advanced frontend engineering, performance optimization, and robust state management.
+        </Typography>
+        <Typography sx={{ fontWeight: 600, mb: 1 }}>Tech Stack:</Typography>
+        <ul style={{ marginTop: 0, marginBottom: 12, color: '#444', fontSize: 16 }}>
+          <li>React, TypeScript, Material-UI (MUI)</li>
+          <li>Redux Toolkit for state management</li>
+          <li>Jest & React Testing Library for testing</li>
+          <li>Vite for fast builds and hot reloads</li>
+          <li>Service Worker for PWA/offline support</li>
+          <li>Local Storage, Day.js, Virtualized Lists</li>
+        </ul>
+        <Typography sx={{ fontWeight: 600, mb: 1 }}>Key Features:</Typography>
+        <ul style={{ marginTop: 0, color: '#444', fontSize: 16 }}>
+          <li>Flight search with flexible dates and trip types</li>
+          <li>Advanced pagination, filtering, and virtualized results for performance</li>
+          <li>Autocomplete for city/airport fields</li>
+          <li>Popular routes & destinations, price calendar, and FAQ</li>
+          <li>Recent searches saved in local storage</li>
+          <li>Comprehensive unit/integration tests with Jest</li>
+          <li>Responsive, modern UI with Material-UI</li>
+        </ul>
+        <Typography sx={{ color: '#888', fontSize: 15, mt: 2 }}>
+          This section is for demonstration and recruiter review. Explore the app to see all features in action!
+        </Typography>
       </Box>
+      
       <FlightHero />
       <FlightSearchForm />
       {/* Place filters above the table, full width, when not mobile */}
@@ -142,12 +198,31 @@ const FlightPage: React.FC = () => {
       )}
       {hasResults && !isMobile && (
         <Box sx={{ mb: 2 }}>
-          <FlightFilters stopsFilter={stopsFilter} setStopsFilter={setStopsFilter} />
+          <FlightFilters
+            stopsFilter={filters.stops[0] || "Any number of stops"}
+            setStopsFilter={handleStopsFilterChange}
+            airlinesFilter={filters.airlines}
+            setAirlinesFilter={handleAirlinesFilterChange}
+            bagsFilter={filters.bags}
+            setBagsFilter={handleBagsFilterChange}
+            priceFilter={filters.price}
+            setPriceFilter={handlePriceFilterChange}
+            timesFilter={filters.times}
+            setTimesFilter={handleTimesFilterChange}
+            emissionsFilter={filters.emissions}
+            setEmissionsFilter={handleEmissionsFilterChange}
+            connectingAirportsFilter={filters.connectingAirports}
+            setConnectingAirportsFilter={handleConnectingAirportsFilterChange}
+            durationFilter={filters.duration}
+            setDurationFilter={handleDurationFilterChange}
+          />
         </Box>
       )}
       <Grid container spacing={isMobile ? 1 : 3}>
         <Grid item xs={12}>
-          {useVirtualization ? <VirtualizedFlightResults itineraries={filteredFlights} /> : <FlightResults />}
+          {useVirtualization
+            ? <VirtualizedFlightResults itineraries={filteredFlights} />
+            : <FlightResults flights={filteredFlights} />}
         </Grid>
       </Grid>
 

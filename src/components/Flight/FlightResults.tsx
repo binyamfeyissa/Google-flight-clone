@@ -27,9 +27,13 @@ import { setSortModel, setFilterModel } from "@/store/slices/uiSlice"
 import { formatDuration, formatTime } from "@/utils/formatters"
 import ColumnCustomization from "./ColumnCustomization"
 
-const FlightResults: React.FC = () => {
+interface FlightResultsProps {
+  flights: any[];
+}
+
+const FlightResults: React.FC<FlightResultsProps> = ({ flights }) => {
   const dispatch = useAppDispatch()
-  const { flights, isSearchingFlights, flightError } = useAppSelector((state) => state.flights)
+  const { isSearchingFlights, flightError } = useAppSelector((state) => state.flights)
 
   // Transform flights data for DataGrid
   const rows = useMemo(() => {

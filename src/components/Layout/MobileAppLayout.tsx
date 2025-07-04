@@ -28,6 +28,7 @@ import {
 } from "@mui/icons-material"
 import { useAppDispatch, useAppSelector } from "@/store"
 import { setActiveTab, toggleSidebar } from "@/store/slices/uiSlice"
+import ThemeModeToggle from "./ThemeModeToggle"
 
 interface MobileAppLayoutProps {
   children: React.ReactNode
@@ -108,9 +109,7 @@ const MobileAppLayout: React.FC<MobileAppLayoutProps> = ({ children }) => {
           <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
             TravelSearch
           </Typography>
-          <IconButton color="inherit">
-            <SettingsIcon />
-          </IconButton>
+          <ThemeModeToggle />
         </Toolbar>
       </AppBar>
 

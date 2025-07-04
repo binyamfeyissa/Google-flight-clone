@@ -31,9 +31,32 @@ const filterOptions = [
 interface FlightFiltersProps {
   stopsFilter: string;
   setStopsFilter: (value: string) => void;
+  airlinesFilter: string[];
+  setAirlinesFilter: (value: string[]) => void;
+  bagsFilter: string;
+  setBagsFilter: (value: string) => void;
+  priceFilter: string;
+  setPriceFilter: (value: string) => void;
+  timesFilter: string;
+  setTimesFilter: (value: string) => void;
+  emissionsFilter: string;
+  setEmissionsFilter: (value: string) => void;
+  connectingAirportsFilter: string;
+  setConnectingAirportsFilter: (value: string) => void;
+  durationFilter: string;
+  setDurationFilter: (value: string) => void;
 }
 
-const FlightFilters: React.FC<FlightFiltersProps> = ({ stopsFilter, setStopsFilter }) => {
+const FlightFilters: React.FC<FlightFiltersProps> = ({
+  stopsFilter, setStopsFilter,
+  airlinesFilter, setAirlinesFilter,
+  bagsFilter, setBagsFilter,
+  priceFilter, setPriceFilter,
+  timesFilter, setTimesFilter,
+  emissionsFilter, setEmissionsFilter,
+  connectingAirportsFilter, setConnectingAirportsFilter,
+  durationFilter, setDurationFilter
+}) => {
   const [anchorEls, setAnchorEls] = useState<(null | HTMLElement)[]>(Array(filterOptions.length).fill(null))
   const [allFiltersAnchor, setAllFiltersAnchor] = useState<null | HTMLElement>(null)
 
@@ -56,6 +79,37 @@ const FlightFilters: React.FC<FlightFiltersProps> = ({ stopsFilter, setStopsFilt
   const handleAllFiltersClose = () => {
     setAllFiltersAnchor(null)
   }
+
+  // Airlines handler
+  const handleAirlineToggle = (airline: string) => {
+    if (airlinesFilter.includes(airline)) {
+      setAirlinesFilter(airlinesFilter.filter(a => a !== airline));
+    } else {
+      setAirlinesFilter([...airlinesFilter, airline]);
+    }
+  };
+
+  // Dropdown handlers
+  const dropdownHandlers = [
+    setStopsFilter,
+    setAirlinesFilter, // not used for dropdown, handled by checkboxes
+    setBagsFilter,
+    setPriceFilter,
+    setTimesFilter,
+    setEmissionsFilter,
+    setConnectingAirportsFilter,
+    setDurationFilter
+  ];
+  const dropdownValues = [
+    stopsFilter,
+    '', // airlines handled separately
+    bagsFilter,
+    priceFilter,
+    timesFilter,
+    emissionsFilter,
+    connectingAirportsFilter,
+    durationFilter
+  ];
 
   return (
     <Box sx={{
@@ -91,7 +145,7 @@ const FlightFilters: React.FC<FlightFiltersProps> = ({ stopsFilter, setStopsFilt
           <Typography variant="h6" sx={{ mb: 2 }}>
             Filters
           </Typography>
-          {/* Example: Stops filter */}
+          {/* Stops filter */}
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Stops
           </Typography>
@@ -102,17 +156,18 @@ const FlightFilters: React.FC<FlightFiltersProps> = ({ stopsFilter, setStopsFilt
             <FormControlLabel value="2 stops or fewer" control={<Radio />} label="2 stops or fewer" />
           </RadioGroup>
           <Divider sx={{ my: 2 }} />
+          {/* Airlines filter */}
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Airlines
           </Typography>
-          <FormControlLabel control={<Switch defaultChecked />} label="Select all airlines" />
+          <FormControlLabel control={<Switch checked={airlinesFilter.length === 0} onChange={() => setAirlinesFilter([])} />} label="Select all airlines" />
           <Box sx={{ pl: 2 }}>
-            <FormControlLabel control={<Checkbox />} label="Oneworld" />
-            <FormControlLabel control={<Checkbox />} label="SkyTeam" />
-            <FormControlLabel control={<Checkbox />} label="Star Alliance" />
+            <FormControlLabel control={<Checkbox checked={airlinesFilter.includes('Oneworld')} onChange={() => handleAirlineToggle('Oneworld')} />} label="Oneworld" />
+            <FormControlLabel control={<Checkbox checked={airlinesFilter.includes('SkyTeam')} onChange={() => handleAirlineToggle('SkyTeam')} />} label="SkyTeam" />
+            <FormControlLabel control={<Checkbox checked={airlinesFilter.includes('Star Alliance')} onChange={() => handleAirlineToggle('Star Alliance')} />} label="Star Alliance" />
           </Box>
           <Divider sx={{ my: 2 }} />
-          <Button fullWidth variant="outlined" color="primary" sx={{ mt: 1 }}>
+          <Button fullWidth variant="outlined" color="primary" sx={{ mt: 1 }} onClick={() => { setStopsFilter('Any number of stops'); setAirlinesFilter([]); }}>
             Clear all
           </Button>
         </Box>
@@ -133,7 +188,16 @@ const FlightFilters: React.FC<FlightFiltersProps> = ({ stopsFilter, setStopsFilt
             anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
           >
             {filter.options.map((option) => (
-              <MenuItem key={option}>{option}</MenuItem>
+              <MenuItem
+                key={option}
+                selected={dropdownValues[idx] === option}
+                onClick={() => {
+                  if (dropdownHandlers[idx]) dropdownHandlers[idx](option);
+                  handleMenuClose(idx);
+                }}
+              >
+                {option}
+              </MenuItem>
             ))}
           </Menu>
         </React.Fragment>
