@@ -1,6 +1,6 @@
 {
-  "name": "TravelSearch - Google Flights Clone",
-  "short_name": "TravelSearch",
+  "name": "Google Flights Clone",
+  "short_name": "TGoogle Flights Clone",
   "description": "Modern flight, hotel, and car rental search application",
   "start_url": "/",
   "display": "standalone",

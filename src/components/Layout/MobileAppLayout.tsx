@@ -53,7 +53,7 @@ const MobileAppLayout: React.FC<MobileAppLayoutProps> = ({ children }) => {
     <Box sx={{ width: 280, pt: 2 }}>
       <Box sx={{ px: 3, pb: 2 }}>
         <Typography variant="h6" fontWeight={700}>
-          TravelSearch
+        Google Flights Clone
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Find your perfect trip
@@ -106,7 +106,7 @@ const MobileAppLayout: React.FC<MobileAppLayoutProps> = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
-            TravelSearch
+          Google Flights Clone
           </Typography>
           <IconButton color="inherit">
             <SettingsIcon />

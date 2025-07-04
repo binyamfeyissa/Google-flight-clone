@@ -1,4 +1,4 @@
-# TravelSearch - Advanced Google Flights Clone
+# Google Flights Clone - Advanced Google Flights Clone
 
 A production-ready, enterprise-grade flight search application showcasing modern React development practices, advanced performance optimizations, and scalable architecture patterns.
 

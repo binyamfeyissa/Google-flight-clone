@@ -57,7 +57,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     <Box sx={{ width: 250 }}>
       <Toolbar>
         <Typography variant="h6" noWrap component="div">
-          TravelSearch
+        Google Flights Clone
         </Typography>
       </Toolbar>
       <List>
@@ -110,7 +110,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             </IconButton>
           )}
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, fontWeight: 700 }}>
-            TravelSearch
+          Google Flights Clone
           </Typography>
           {!isMobile && (
             <Tabs value={activeTab} onChange={handleTabChange} sx={{ ml: 4 }}>
