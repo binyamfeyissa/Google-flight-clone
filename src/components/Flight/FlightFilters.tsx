@@ -92,7 +92,7 @@ const FlightFilters: React.FC<FlightFiltersProps> = ({
   // Dropdown handlers
   const dropdownHandlers = [
     setStopsFilter,
-    setAirlinesFilter, // not used for dropdown, handled by checkboxes
+    () => {}, // airlines handled separately
     setBagsFilter,
     setPriceFilter,
     setTimesFilter,
@@ -192,7 +192,12 @@ const FlightFilters: React.FC<FlightFiltersProps> = ({
                 key={option}
                 selected={dropdownValues[idx] === option}
                 onClick={() => {
-                  if (dropdownHandlers[idx]) dropdownHandlers[idx](option);
+                  if (filter.label === "Airlines") {
+                    // Airlines filter expects an array
+                    setAirlinesFilter(option === "Select all airlines" ? [] : [option]);
+                  } else if (dropdownHandlers[idx]) {
+                    dropdownHandlers[idx](option);
+                  }
                   handleMenuClose(idx);
                 }}
               >

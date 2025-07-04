@@ -30,7 +30,7 @@ const renderWithProviders = (component: React.ReactElement, initialState = {}) =
 
 describe("FlightResults", () => {
   test("shows no flights message when no results", () => {
-    renderWithProviders(<FlightResults />)
+    renderWithProviders(<FlightResults flights={[]} />)
 
     expect(screen.getByText("No flights found")).toBeInTheDocument()
     expect(screen.getByText("Try adjusting your search criteria or dates")).toBeInTheDocument()
@@ -69,7 +69,7 @@ describe("FlightResults", () => {
       },
     }
 
-    renderWithProviders(<FlightResults />, initialState)
+    renderWithProviders(<FlightResults flights={[]} />, initialState)
 
     expect(screen.getByText("Searching for flights...")).toBeInTheDocument()
   })
@@ -107,7 +107,7 @@ describe("FlightResults", () => {
       },
     }
 
-    renderWithProviders(<FlightResults />, initialState)
+    renderWithProviders(<FlightResults flights={mockFlights} />, initialState)
 
     expect(screen.getByText(`${mockFlights.length} flights found`)).toBeInTheDocument()
     expect(screen.getByText("American Airlines")).toBeInTheDocument()

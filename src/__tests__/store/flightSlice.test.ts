@@ -30,6 +30,12 @@ describe("flightSlice", () => {
       stops: [],
       airlines: [],
       departureTime: [],
+      bags: 'Any',
+      price: 'Any',
+      times: 'Any',
+      emissions: 'Any',
+      connectingAirports: 'Any',
+      duration: 'Any',
     },
   }
 

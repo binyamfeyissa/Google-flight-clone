@@ -30,7 +30,7 @@ const PriceCalendar: React.FC<PriceCalendarProps> = ({ priceData }) => {
           }}
         >
           <Typography variant="body2" fontWeight={600}>
-            {data.dayOfWeek}, {data.date}
+            {data.date}
           </Typography>
           <Typography variant="h6" color="primary">
             ${data.price}
