@@ -1,6 +1,6 @@
 # Google Flights Clone - Advanced Google Flights Clone
 
-A production-ready, enterprise-grade flight search application showcasing modern React development practices, advanced performance optimizations, and scalable architecture patterns.
+Enterprise-grade flight search application showcasing modern React development practices, advanced performance optimizations, and scalable architecture patterns.
 
 ## 🎯 **For Senior Frontend Developers**
 
@@ -18,7 +18,7 @@ This project demonstrates mastery of:
 
 ### **State Management Strategy**
 
-```typescript
+```
 // Normalized Redux state with RTK
 interface AppState {
   flights: FlightState; // Search results, filters, preferences
@@ -58,7 +58,7 @@ src/components/
 
 #### **1. Virtual Scrolling**
 
-\`\`\`typescript
+\`\`\`
 // Handle 10,000+ flight results without performance degradation
 import { FixedSizeList as List } from 'react-window'
 
@@ -79,7 +79,7 @@ return (
 
 #### **2. Intelligent Memoization**
 
-\`\`\`typescript
+\`\`\`
 // Prevent unnecessary re-renders with strategic memoization
 const FlightRow = React.memo(({ flight, onSelect }) => {
 const handleSelect = useCallback(() => {
@@ -98,7 +98,7 @@ const selectFilteredFlights = createSelector(
 
 #### **3. Progressive Web App Features**
 
-\`\`\`typescript
+\`\`\`
 // Service Worker with intelligent caching
 const CACHE_STRATEGIES = {
 API_RESPONSES: 'network-first', // Fresh data preferred
@@ -120,7 +120,7 @@ event.waitUntil(syncPendingSearches())
 
 ### **Breakpoint Strategy**
 
-\`\`\`typescript
+\`\`\`
 const theme = createTheme({
 breakpoints: {
 values: {
@@ -147,7 +147,7 @@ return isMobile ? (
 
 ### **Touch-First Interactions**
 
-\`\`\`typescript
+\`\`\`
 // SwipeableDrawer for mobile navigation
 <SwipeableDrawer
 anchor="left"
@@ -181,7 +181,7 @@ sx={{ position: 'fixed', bottom: 0 }}
 
 ### **1. User Preferences Persistence**
 
-\`\`\`typescript
+\`\`\`
 // Sophisticated localStorage abstraction
 export class PreferencesManager {
 private static instance: PreferencesManager
@@ -217,7 +217,7 @@ saveUserPreferences({ visibleColumns: action.payload })
 
 ### **2. Intelligent Search Enhancements**
 
-\`\`\`typescript
+\`\`\`
 // Debounced autocomplete with caching
 const useAirportSearch = (query: string) => {
 const [results, setResults] = useState<Airport[]>([])
@@ -250,7 +250,7 @@ return results
 
 ### **3. Advanced Data Visualization**
 
-\`\`\`typescript
+\`\`\`
 // SVG-based route mapping with animations
 const RouteMap = ({ origin, destination }) => {
 const pathData = useMemo(() => {
@@ -294,7 +294,7 @@ return (
 
 ### **Component Testing**
 
-\`\`\`typescript
+\`\`\`
 // Comprehensive component testing with MSW
 describe('FlightSearchForm', () => {
 beforeEach(() => {
@@ -325,7 +325,7 @@ render(<FlightSearchForm />)
 
 ### **Redux Testing**
 
-\`\`\`typescript
+\`\`\`
 // State management testing with realistic scenarios
 describe('flightSlice', () => {
 test('handles concurrent search requests correctly', async () => {
@@ -351,7 +351,7 @@ const store = createTestStore()
 
 ### **Performance Testing**
 
-\`\`\`typescript
+\`\`\`
 // Performance benchmarks for critical paths
 describe('Performance', () => {
 test('renders 1000 flight results under 100ms', () => {
@@ -403,7 +403,7 @@ Tree Shaking: 67% reduction in unused code
 
 ### **Runtime Performance**
 
-\`\`\`typescript
+\`\`\`
 // Performance monitoring in production
 const performanceObserver = new PerformanceObserver((list) => {
 for (const entry of list.getEntries()) {
@@ -432,7 +432,7 @@ performance.measure('flight-search', 'search-start', 'search-end')
 
 ### **Build Optimization**
 
-\`\`\`typescript
+\`\`\`
 // Vite configuration for production
 export default defineConfig({
 build: {
@@ -525,7 +525,7 @@ vercel-token: \${{ secrets.VERCEL_TOKEN }}
 
 ### **Code Organization**
 
-\`\`\`typescript
+\`\`\`
 // Feature-based folder structure scales to large teams
 src/
 ├── features/
@@ -550,7 +550,7 @@ src/
 
 ### **API Integration Strategy**
 
-\`\`\`typescript
+\`\`\`
 // Abstracted API layer for easy provider switching
 interface FlightSearchProvider {
 searchFlights(params: SearchParams): Promise<Flight[]>
